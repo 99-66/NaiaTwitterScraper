@@ -62,8 +62,6 @@ func GetStreamTweets(api *config.API, c chan<- models.Tweet) {
 		if err != nil {
 			log.Fatalf("set origin to failed. %v\n", err)
 		}
-		// {2021-04-01T11:27:08+09:00 1377447408863342594 납골당은 첨 가본돠 옷차림이나 뭐나 뚜렷한 형식은 없다길래 편하게 입어봤돠 넘 편한 건가 싶어서 대한유교걸 조금 후회된돠 슬랙스 입을 걸 그랬나??}
-		log.Printf("send to %d %s\n", tweet.Id, tweet.Text)
 		c <- *tweet
 	}
 	defer close(c)
@@ -75,7 +73,7 @@ func TestGetStreamTweets(api *config.API, c chan<- models.Tweet) {
 		tw := models.Tweet{
 			CreatedAt: "2021-06-01T11:27:08+09:00",
 			Id: 1377447408863342596,
-			Text: "첨 가본돠 옷차림이나 뭐나 뚜렷한 형식은 없다길래 편하게 입어봤돠 넘 편한 건가 싶어서 대한유교걸 조금 후회된돠 슬랙스 입을 걸 그랬나??",
+			Text: "편한건가 싶어서 조금 후회된다 티셔츠 입을 걸",
 		}
 		err := tw.SetOrigin()
 		if err != nil {
