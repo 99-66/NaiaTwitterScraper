@@ -6,7 +6,6 @@ import (
 	"github.com/99-66/NaiaTwitterScraper/controller/kafka"
 	"github.com/99-66/NaiaTwitterScraper/models"
 	"github.com/Shopify/sarama"
-
 	"log"
 )
 
