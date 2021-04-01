@@ -52,11 +52,12 @@ func (w *Tweet) SetOrigin() error {
 	return nil
 }
 
-// TrimText Text 데이터의 앞뒤 공백을 제거한다
+// TrimText Text 데이터의 공백, 개행을 제거한다
 func (w *Tweet) TrimText() {
 	if w == nil {
 		return
 	}
-
-	w.Text = strings.Trim(w.Text, " ")
+	txt := w.Text
+	txt = strings.Replace(txt, "\n", "", -1)
+	w.Text = strings.Trim(txt, " ")
 }
