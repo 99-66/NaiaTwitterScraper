@@ -1,0 +1,9 @@
+# Twitter API Auth tokens
+export API_KEY=
+export API_SECRET=
+export ACCESS_TOKEN=
+export ACCESS_TOKEN_SECRET=
+
+# Kafka
+export TOPIC=
+export BROKER=
