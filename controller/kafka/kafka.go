@@ -54,6 +54,10 @@ func GetStreamTweets(api *config.API, c chan<- models.Tweet) {
 			log.Fatalf("tweet parsing failed. %v\n", err)
 		}
 		tweet.TrimText()
+		err = tweet.SetTag()
+		if err != nil {
+			log.Fatalf("set tagged failed. %v\n", err)
+		}
 		err = tweet.ChangeDateFormat()
 		if err != nil {
 			log.Fatalf("parsing to tweet failed. %v\n", err)

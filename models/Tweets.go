@@ -11,6 +11,7 @@ type Tweet struct {
 	Id int `json:"id"`
 	Text string `json:"text"`
 	Origin string `json:"origin"`
+	Tag string `json:"tag"`
 }
 
 // ChangeDateFormat 날짜 포맷을 변경한다
@@ -21,7 +22,7 @@ func (w *Tweet) ChangeDateFormat() error {
 		return fmt.Errorf("receiver is nil")
 	}
 
-	// 트위터 created_at 필드를 파싱하여 Time 객체로 생성
+	// created_at 필드를 파싱하여 Time 객체로 생성
 	t, err := time.Parse(time.RubyDate, w.CreatedAt)
 	if err != nil {
 		return err
@@ -35,20 +36,30 @@ func (w *Tweet) ChangeDateFormat() error {
 
 	// 타임존 변경 및 RFC3339 형식으로 날짜 형식 변경
 	tToKst := t.In(loc).Format(time.RFC3339)
-	// 저장된 값 created_at 변경
+
+	// 변경한 created_at으로 변경
 	w.CreatedAt = tToKst
 
 	return nil
 }
 
 // SetOrigin 데이터의 출처를 설정한다
-// 트윗의 데이터의 출처를 'twitter'로 설정한다
 func (w *Tweet) SetOrigin() error {
 	if w == nil {
 		return fmt.Errorf("receiver is nil")
 	}
 
 	w.Origin = "twitter"
+	return nil
+}
+
+// SetTag 태그를 설정한다
+// 태그는 프로젝트에서의 메시지 카테고리를 의미한다
+func (w *Tweet) SetTag() error{
+	if w== nil {
+		return fmt.Errorf("receiver is nil")
+	}
+	w.Tag = "sns"
 	return nil
 }
 
