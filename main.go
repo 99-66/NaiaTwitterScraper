@@ -50,7 +50,7 @@ func main() {
 			Topic: kafkaConfig.Topic,
 			Value: sarama.ByteEncoder(valJson),
 		}
-		log.Printf("send to %d %s\n", val.Id)
+		log.Printf("send to %d\n", val.Id)
 		p.Input() <- msg
 	}
 }
