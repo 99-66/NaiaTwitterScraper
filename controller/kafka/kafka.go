@@ -45,7 +45,7 @@ func GetStreamTweets(api *config.API, c chan<- models.Tweet) {
 			if err == io.EOF {
 				break
 			}
-			log.Fatalf("buffer read bytes failed. %v\n", err)
+			log.Printf("buffer read bytes failed. %v\n", err)
 		}
 
 		var tweet *models.Tweet
