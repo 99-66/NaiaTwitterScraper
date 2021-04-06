@@ -1,0 +1,31 @@
+FROM golang:1.16-alpine
+LABEL maintainer="Jintae, Kim <6199@outlook.kr>"
+
+COPY . /app
+ENV HOME=/app
+
+# Build Argument Set
+ARG API_KEY
+ARG API_SECRET
+ARG ACCESS_TOKEN
+ARG ACCESS_TOKEN_SECRET
+ARG TOPIC
+ARG BROKER
+
+# Env Set
+ENV API_KEY=${API_KEY}
+ENV API_SECRET=${API_SECRET}
+ENV ACCESS_TOKEN=${ACCESS_TOKEN}
+ENV ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+ENV TOPIC=${TOPIC}
+ENV BROKER=${BROKER}
+
+# Timezone Set
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Seoul
+
+# Build
+WORKDIR ${HOME}
+RUN apk --no-cache add tzdata && go build main.go
+
+ENTRYPOINT ["./main"]
