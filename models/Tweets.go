@@ -72,3 +72,9 @@ func (w *Tweet) TrimText() {
 	txt = strings.Replace(txt, "\n", "", -1)
 	w.Text = strings.Trim(txt, " ")
 }
+
+// IsRetweet 리트윗이라면 무시한다
+// 트윗 내용이 'RT @' 으로 시작하면 true를 반환한다
+func (w *Tweet) IsRetweet() bool {
+	return strings.HasPrefix(w.Text, "RT @")
+}

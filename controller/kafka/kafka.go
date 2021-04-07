@@ -46,25 +46,34 @@ func GetStreamTweets(api *config.API, c chan<- models.Tweet) {
 				break
 			}
 			log.Printf("buffer read bytes failed. %v\n", err)
+			continue
 		}
 
 		var tweet *models.Tweet
 		err = json.Unmarshal(line, &tweet)
 		if err != nil {
-			log.Fatalf("tweet parsing failed. %v\n", err)
+			log.Printf("tweet parsing failed. %v\n", err)
+			continue
 		}
 		tweet.TrimText()
 		err = tweet.SetTag()
 		if err != nil {
-			log.Fatalf("set tagged failed. %v\n", err)
+			log.Printf("set tagged failed. %v\n", err)
+			continue
 		}
 		err = tweet.ChangeDateFormat()
 		if err != nil {
-			log.Fatalf("parsing to tweet failed. %v\n", err)
+			log.Printf("parsing to tweet failed. %v\n", err)
+			continue
 		}
 		err = tweet.SetOrigin()
 		if err != nil {
-			log.Fatalf("set origin to failed. %v\n", err)
+			log.Printf("set origin to failed. %v\n", err)
+			continue
+		}
+		// 리트윗이라면 처리하지 않고 넘어간다
+		if tweet.IsRetweet() {
+			continue
 		}
 		c <- *tweet
 	}
