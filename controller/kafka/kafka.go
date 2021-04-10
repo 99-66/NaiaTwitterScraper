@@ -10,6 +10,8 @@ import (
 	"github.com/dghubble/oauth1"
 	"io"
 	"log"
+	"os"
+	"time"
 )
 
 func NewAsyncProducer(broker string) (sarama.AsyncProducer, error) {
@@ -46,7 +48,10 @@ func GetStreamTweets(api *config.API, c chan<- models.Tweet) {
 				break
 			}
 			log.Printf("buffer read bytes failed. %v\n", err)
-			continue
+			// 스트림 에러가 발생하면 딜레이를 준 후 종료시킨다
+			// 종료되더라도 docker --restart 옵션으로 다시 실행된다
+			time.Sleep(time.Second * 30)
+			os.Exit(1)
 		}
 
 		var tweet *models.Tweet
